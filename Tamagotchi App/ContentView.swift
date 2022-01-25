@@ -8,15 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var tamagotchi = Tamagotchi()
     var body: some View {
-        let tamagotchi = Tamagotchi(hunger: 5, dead: false, health: 75, weight: 7, happiness: 1)
-        Text("""
-                Hunger: \(tamagotchi.hunger)
-                Happiness: \(tamagotchi.happiness)
-                Health: \(tamagotchi.health)/100
-                Weight: \(tamagotchi.weight)kg
-                """)
-            .padding()
+        VStack {
+            Text("""
+                    Hunger: \(tamagotchi.hunger)
+                    Happiness: \(tamagotchi.happiness)
+                    Health: \(tamagotchi.health)/100
+                    Weight: \(tamagotchi.weight)kg
+                    """)
+            Form {
+                Section {
+                    Button("Eat Meal", action: {
+                        tamagotchi.feedTamagotchiMeal()
+                    })
+                    Button("Eat Snack", action: {
+                        tamagotchi.feedTamagotchiSnack()
+                    })
+                    Button("Play Game", action: {
+                        tamagotchi.playGame()
+                    })
+                }
+            }
+        }
     }
 }
 
