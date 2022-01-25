@@ -43,7 +43,7 @@ class Tamagotchi: ObservableObject {
     }
     
     func decreaseHealth() {
-        health -= 5
+        health -= 15
     }
     
     func increaseAge() {

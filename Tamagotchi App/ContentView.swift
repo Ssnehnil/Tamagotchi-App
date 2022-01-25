@@ -15,18 +15,21 @@ struct ContentView: View {
         VStack {
             Text("\(timePassing)")
                 .onReceive(timer) { _ in
-                    self.timePassing += 1
-                    if self.timePassing % 10 == 0 {
-                        tamagotchi.decreaseHealth()
-                    }
-                    if self.timePassing % 30 == 0 {
-                        tamagotchi.increaseAge()
-                    }
-                    if tamagotchi.health == 0 {
-                        tamagotchi.dead = true
+                    if !tamagotchi.dead {
+                        self.timePassing += 1
+                        if self.timePassing % 10 == 0 {
+                            tamagotchi.decreaseHealth()
+                        }
+                        if self.timePassing % 30 == 0 {
+                            tamagotchi.increaseAge()
+                        }
+                        if tamagotchi.health == 0 {
+                            tamagotchi.dead = true
+                        }
                     }
                 }
             Form {
+                Text("I am \(tamagotchi.dead ? "dead" : "alive")")
                 Section {
                     Text("""
                             Hunger: \(tamagotchi.hunger)
@@ -47,6 +50,7 @@ struct ContentView: View {
                         tamagotchi.playGame()
                     })
                 }
+                .disabled(tamagotchi.dead)
             }
         }
     }
