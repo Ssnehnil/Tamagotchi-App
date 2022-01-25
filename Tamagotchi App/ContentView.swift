@@ -9,15 +9,33 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var tamagotchi = Tamagotchi()
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State private var timePassing = 0
     var body: some View {
         VStack {
-            Text("""
-                    Hunger: \(tamagotchi.hunger)
-                    Happiness: \(tamagotchi.happiness)
-                    Health: \(tamagotchi.health)/100
-                    Weight: \(tamagotchi.weight)kg
-                    """)
+            Text("\(timePassing)")
+                .onReceive(timer) { _ in
+                    self.timePassing += 1
+                    if self.timePassing % 10 == 0 {
+                        tamagotchi.decreaseHealth()
+                    }
+                    if self.timePassing % 30 == 0 {
+                        tamagotchi.increaseAge()
+                    }
+                    if tamagotchi.health == 0 {
+                        tamagotchi.dead = true
+                    }
+                }
             Form {
+                Section {
+                    Text("""
+                            Hunger: \(tamagotchi.hunger)
+                            Happiness: \(tamagotchi.happiness)
+                            Health: \(tamagotchi.health)/100
+                            Weight: \(tamagotchi.weight)kg
+                            Age: \(tamagotchi.age) years old
+                            """)
+                }
                 Section {
                     Button("Eat Meal", action: {
                         tamagotchi.feedTamagotchiMeal()
