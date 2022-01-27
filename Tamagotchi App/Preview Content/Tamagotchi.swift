@@ -16,11 +16,11 @@ class Tamagotchi: ObservableObject {
     @Published var age: Int
     
     init() {
-        self.hunger = 20
+        self.hunger = 10
         self.dead = false
         self.health = 75
         self.weight = 7
-        self.happiness = 1
+        self.happiness = 5
         self.age = 0
     }
     
@@ -29,6 +29,10 @@ class Tamagotchi: ObservableObject {
         weight += 3
         happiness += 5
         health += 5
+        if hunger < 6 {
+            health -= 10
+            happiness -= 1
+        }
     }
     
     func feedTamagotchiSnack() {
@@ -36,14 +40,19 @@ class Tamagotchi: ObservableObject {
         weight += 1
         happiness += 3
         health += 1
+        if hunger < 4 {
+            health -= 5
+            happiness -= 1
+        }
     }
     
     func playGame() {
         happiness += 5
     }
     
-    func decreaseHealth() {
-        health -= 15
+    func decreaseHealthAndHappiness() {
+        health -= 5
+        happiness -= 3
     }
     
     func increaseAge() {
@@ -52,5 +61,13 @@ class Tamagotchi: ObservableObject {
     
     func giveMedicine() {
         health += 20
+    }
+    
+    func increaseHunger() {
+        hunger += 1
+    }
+    
+    func decreaseWeight() {
+        weight -= 1
     }
 }

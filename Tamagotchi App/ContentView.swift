@@ -18,12 +18,14 @@ struct ContentView: View {
                     if !tamagotchi.dead {
                         self.timePassing += 1
                         if self.timePassing % 10 == 0 {
-                            tamagotchi.decreaseHealth()
+                            tamagotchi.decreaseHealthAndHappiness()
+                            tamagotchi.increaseHunger()
+                            tamagotchi.decreaseWeight()
                         }
                         if self.timePassing % 30 == 0 {
                             tamagotchi.increaseAge()
                         }
-                        if tamagotchi.health == 0 {
+                        if tamagotchi.health <= 0 || tamagotchi.hunger > 10 || tamagotchi.happiness < 3 || tamagotchi.weight < 4 || tamagotchi.weight > 16 || tamagotchi.age > 24 {
                             tamagotchi.dead = true
                         }
                     }
